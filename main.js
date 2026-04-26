@@ -2,10 +2,12 @@ const express = require('express')
 const db = require('./config/db')
 const productRouter = require('./products/product.route')
 const userRouter = require('./users/user.route')
+const authRouter = require('./auth/auth.route')
 const app = express()
 
 app.use(express.json())
 
+app.use('/auth', authRouter)
 app.use('/products', productRouter)
 app.use('/users', userRouter)
 
