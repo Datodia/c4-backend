@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const db = require('./config/db')
 const productRouter = require('./products/product.route')
 const userRouter = require('./users/user.route')
@@ -6,6 +7,7 @@ const authRouter = require('./auth/auth.route')
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.use('/auth', authRouter)
 app.use('/products', productRouter)
@@ -14,7 +16,6 @@ app.use('/users', userRouter)
 app.get('/', (req, res) => {
     res.send('hello world')
 })
-
 
 
 db().then(res => {
