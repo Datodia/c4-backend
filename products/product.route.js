@@ -29,6 +29,7 @@ productRouter.get('/', async (req, res) => {
     const products = await productModel
         .find(filter)
         .populate({path: "seller",select: 'fullName'})
+        .sort({_id: -1})
         .skip((page - 1) * take)
         .limit(take)
 
