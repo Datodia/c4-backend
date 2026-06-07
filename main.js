@@ -4,6 +4,7 @@ const db = require('./config/db')
 const productRouter = require('./products/product.route')
 const userRouter = require('./users/user.route')
 const authRouter = require('./auth/auth.route')
+const { upload } = require('./config/cloudinary')
 const app = express()
 
 app.use(express.json())
@@ -12,6 +13,10 @@ app.use(cors())
 app.use('/auth', authRouter)
 app.use('/products', productRouter)
 app.use('/users', userRouter)
+
+app.use('/photo', upload.single('image'), async (req, res) => {
+    res.status(200).json({message: "uploaded successfully"})
+})
 
 app.get('/', (req, res) => {
     res.send('hello world')

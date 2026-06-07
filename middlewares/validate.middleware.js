@@ -1,19 +1,21 @@
-const { default: z } = require("zod")
+const { z } = require("zod")
 
 module.exports = (schema) => {
-    return (req, res, next) => {
-        const resp = schema.safeParse(req.body ?? {})
+  return (req, res, next) => {
+    const body = req.body ?? {}
 
-        if(!resp.success){
-            return res.status(400).json({
-                errors: resp.error.issues.map(e => ({
-                    message: e.message,
-                    path: e.path ? e.path.join(".") : "root"
-                }))
-            })
-        }
+    const resp = schema.safeParse(body)
 
-        req.body = resp.data
-        next()
+    if (!resp.success) {
+      return res.status(400).json({
+        errors: resp.error.issues.map((e) => ({
+          message: e.message,
+          path: e.path.length ? e.path.join(".") : "root",
+        })),
+      })
     }
-} 
+
+    req.body = resp.data
+    next()
+  }
+}
