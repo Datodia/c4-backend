@@ -16,6 +16,18 @@ const userSchema = new mongoose.Schema({
         require: true,
         select: false
     },
+    verified: {
+        type: Boolean,
+        default: false
+    },
+    otpCode: {
+        type: String,
+        select: false
+    },
+    otpCodeExpirationDate: {
+        type: Date,
+        select: false
+    },
     products: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'products',
